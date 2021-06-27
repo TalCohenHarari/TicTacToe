@@ -1,7 +1,5 @@
 package com.example.ticactoe;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     ImageButton[][] matrix = new ImageButton[3][3];
@@ -210,5 +210,19 @@ public class MainActivity extends AppCompatActivity {
     public void PlayBackgroundSound(View view) {
         Intent intent = new Intent(this, BackgroundSoundService.class);
         startService(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if( BackgroundSoundService.mediaPlayer!=null)
+             BackgroundSoundService.mediaPlayer.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if( BackgroundSoundService.mediaPlayer!=null)
+            BackgroundSoundService.mediaPlayer.pause();
     }
 }
