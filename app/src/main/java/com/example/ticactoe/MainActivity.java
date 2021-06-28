@@ -215,14 +215,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if( BackgroundSoundService.mediaPlayer!=null)
-             BackgroundSoundService.mediaPlayer.start();
+        if( BackgroundSoundService.mediaPlayer!=null) {
+            BackgroundSoundService.mediaPlayer.start();
+            if(i==1) {
+                pause.setBackgroundResource(R.drawable.pause_icon);
+                i = 0;
+            }
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if( BackgroundSoundService.mediaPlayer!=null)
-            BackgroundSoundService.mediaPlayer.pause();
+        if( BackgroundSoundService.mediaPlayer!=null) {
+            if(i==0) {
+                BackgroundSoundService.mediaPlayer.pause();
+                pause.setBackgroundResource(R.drawable.play_icon);
+                i = 1;
+            }
+        }
     }
 }
