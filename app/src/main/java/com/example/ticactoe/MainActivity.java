@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -22,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
     String x_o = "x"; //Define x as 1 and o as 2
     int counter =0;
     int i;
+    //Animations
+    Animation animation;
+    ImageButton[] stopAnim = new ImageButton[3];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,10 +154,14 @@ public class MainActivity extends AppCompatActivity {
         player.setText("X  Play");
         x_o="x";
         counter=0;
+        for(int i=0;i<3;i++) {
+            stopAnim[i].clearAnimation();
+        }
     }
 
     public boolean isWin()
     {
+        animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.mixed_anim);
         Boolean[] a=new Boolean[8];
         if( (a[0]=(mark(0,0,1) && mark(0,1,1) && mark(0,2,1))==true) ||
             (a[1]=(mark(1,0,1) && mark(1,1,1) && mark(1,2,1))==true) ||
@@ -170,7 +180,8 @@ public class MainActivity extends AppCompatActivity {
             {
               if(a[i]==true)
               {
-                  marks[i].setVisibility(View.VISIBLE);
+                  playAnimation(i);
+//                  marks[i].setVisibility(View.VISIBLE);
                   return true;
               }
             }
@@ -194,13 +205,84 @@ public class MainActivity extends AppCompatActivity {
             {
                 if(a[i]==true)
                 {
-                    marks[i].setVisibility(View.VISIBLE);
+                    playAnimation(i);
+//                    marks[i].setVisibility(View.VISIBLE);
                     return true;
                 }
             }
         }
         return false;
     }
+
+    private void playAnimation(int i) {
+        switch (i){
+            case 0:
+                matrix[0][0].setAnimation(animation);
+                matrix[0][1].setAnimation(animation);
+                matrix[0][2].setAnimation(animation);
+                stopAnim[0]=matrix[0][0];
+                stopAnim[1]= matrix[0][1];
+                stopAnim[2]= matrix[0][2];
+                break;
+            case 1:
+                matrix[1][0].setAnimation(animation);
+                matrix[1][1].setAnimation(animation);
+                matrix[1][2].setAnimation(animation);
+                stopAnim[0]=matrix[1][0];
+                stopAnim[1]= matrix[1][1];
+                stopAnim[2]= matrix[1][2];
+                break;
+            case 2:
+                matrix[2][0].setAnimation(animation);
+                matrix[2][1].setAnimation(animation);
+                matrix[2][2].setAnimation(animation);
+                stopAnim[0]=matrix[2][0];
+                stopAnim[1]= matrix[2][1];
+                stopAnim[2]= matrix[2][2];
+                break;
+            case 3:
+                matrix[0][0].setAnimation(animation);
+                matrix[1][0].setAnimation(animation);
+                matrix[2][0].setAnimation(animation);
+                stopAnim[0]=matrix[0][0];
+                stopAnim[1]= matrix[1][0];
+                stopAnim[2]= matrix[2][0];
+                break;
+            case 4:
+                matrix[0][1].setAnimation(animation);
+                matrix[1][1].setAnimation(animation);
+                matrix[2][1].setAnimation(animation);
+                stopAnim[0]=matrix[0][1];
+                stopAnim[1]= matrix[1][1];
+                stopAnim[2]= matrix[2][1];
+                break;
+            case 5:
+                matrix[0][2].setAnimation(animation);
+                matrix[1][2].setAnimation(animation);
+                matrix[2][2].setAnimation(animation);
+                stopAnim[0]=matrix[0][2];
+                stopAnim[1]= matrix[1][2];
+                stopAnim[2]= matrix[2][2];
+                break;
+            case 6:
+                matrix[0][0].setAnimation(animation);
+                matrix[1][1].setAnimation(animation);
+                matrix[2][2].setAnimation(animation);
+                stopAnim[0]=matrix[0][0];
+                stopAnim[1]= matrix[1][1];
+                stopAnim[2]= matrix[2][2];
+                break;
+            case 7:
+                matrix[0][2].setAnimation(animation);
+                matrix[1][1].setAnimation(animation);
+                matrix[2][0].setAnimation(animation);
+                stopAnim[0]=matrix[0][2];
+                stopAnim[1]= matrix[1][1];
+                stopAnim[2]= matrix[2][0];
+                break;
+        }
+    }
+
 
     public boolean mark(int i, int j, int number)
     {
